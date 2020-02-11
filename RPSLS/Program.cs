@@ -12,7 +12,7 @@ namespace RPSLS
         {
             Game game = new Game();
             //Call play game method from game class.
-            game.test();
+            game.PlayGame();
             Console.ReadLine();
         }
     }

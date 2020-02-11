@@ -18,12 +18,13 @@ namespace RPSLS
         {
             this.name = name;
             score = 0;
-            gestures = new List<Gesture>() { new Gesture("rock", "scissors", "lizard"), new Gesture("paper", "spock", "rock"), new Gesture("scissors", "paper", "lizard"), new Gesture("lizard", "spock", "paper"), new Gesture("spock", "scissors", "rock") };
+            gestures = new List<Gesture>() { new Gesture("Rock", "Scissors", "Lizard"), new Gesture("Paper", "Spock", "Rock"), new Gesture("Scissors", "Paper", "Lizard"), new Gesture("Lizard", "Spock", "Paper"), new Gesture("Spock", "Scissors", "Rock") };
         }
 
         //Member Methods
 
         //Create universal portion of picking a gesture.
         public abstract Gesture PickGesture();
+        
     }
 }
