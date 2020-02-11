@@ -10,6 +10,8 @@ namespace RPSLS
     {
         static void Main(string[] args)
         {
+            Game game = new Game();
+            //Call play game method from game class.
         }
     }
 }
