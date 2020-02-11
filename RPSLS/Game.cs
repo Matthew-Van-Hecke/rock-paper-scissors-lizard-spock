@@ -8,6 +8,11 @@ namespace RPSLS
 {
     class Game
     {
+        Player testPlayer = new Human("Bob");
+        public void test()
+        {
+            Console.WriteLine(testPlayer.PickGesture().name); ;
+        }
         //Let user choose if they want to play against another human, or against the computer.
         //Let user(s) choose which gesture they want to use.
         //Compare player gestures side by side to determine which gesture wins the battle.

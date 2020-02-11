@@ -11,7 +11,7 @@ namespace RPSLS
         //Member Variables
         public string name;
         public int score;
-        List<Gesture> gestures;
+        public List<Gesture> gestures;
 
         //Constructor
         public Player(string name)
@@ -22,6 +22,8 @@ namespace RPSLS
         }
 
         //Member Methods
-        public abstract void PickGesture();
+
+        //Create universal portion of picking a gesture.
+        public abstract Gesture PickGesture();
     }
 }

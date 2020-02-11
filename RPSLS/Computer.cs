@@ -9,10 +9,15 @@ namespace RPSLS
     class Computer : Player
     {
         public Computer()
+            :base("ROBOPLAYER")
         {
-            this.name = "ROBOPLAYER";
+
         }
         //Assign logic to PickGesture method from player.
-            //Use Random Next function to generate a random number with which to pick a gesture from list.
+        //Use Random Next function to generate a random number with which to pick a gesture from list.
+        public override Gesture PickGesture()
+        {
+            return gestures[0];
+        }
     }
 }
