@@ -12,6 +12,7 @@ namespace RPSLS
         Player playerOne;
         Player playerTwo;
         int winningScore;
+        List<string> gameLog;
         //Contructor
         public Game()
         {
@@ -21,9 +22,13 @@ namespace RPSLS
 
         public void PlayGame()
         {
+            gameLog = new List<string>();
             string resultOfBattle;
+            int roundCounter = 1;
+            string roundResult;
+            gameLog.Clear();
             //Print game instructions
-            PrintInstructions();
+            PrintScreen();
             PressKeyToContinue();
             //Let user choose if they want to play against another human, or against the computer.
             ChoosePlayMode();
@@ -32,19 +37,28 @@ namespace RPSLS
             {
                 //Let user(s) choose which gesture they want to use.
                 playerOne.PickGesture();
+                Console.Clear();
+                PrintScreen();
+                Console.WriteLine("\nThank you for making your choice, " + playerOne.name + ".");
                 playerTwo.PickGesture();
                 //Create method to compare gestures and determine which one wins.
                 resultOfBattle = Battle(playerOne.gesture, playerTwo.gesture);
                 //Print who just one the round.
                 if (resultOfBattle == "tie")
                 {
-                    Console.WriteLine("Round was a tie!");
+                    roundResult = "\nRound was a tie!";
                 }
                 else
                 {
-                    Console.WriteLine("\n" + resultOfBattle + " wins the round");
+                    roundResult = "\n" + resultOfBattle + " wins the round";
                 }
+                roundResult = "\nRound " + roundCounter + ":\n" + playerOne.name + " picked " + playerOne.gesture.name + ".\n" + playerTwo.name + " picked " + playerTwo.gesture.name + "." + roundResult;
+                gameLog.Add(roundResult);
+                roundCounter++;
                 //Repeat these steps until one player reaches three points.
+                //Clear console, and reprint.
+                Console.Clear();
+                PrintScreen();
             }
             //Display victory message.
             if (playerOne.score >= winningScore)
@@ -120,6 +134,21 @@ namespace RPSLS
             Console.Write("Press any key to continue: ");
             Console.ReadKey();
             Console.WriteLine("\n------------------------------------------");
+        }
+        private void PrintScreen()
+        {
+            PrintInstructions();
+            foreach (string logItem in gameLog)
+            {
+                Console.WriteLine(logItem);
+            }
+            try
+            {
+                Console.WriteLine($"\nCurrent scores - {playerOne.name}: {playerOne.score} ---- {playerTwo.name}: {playerTwo.score}");
+                Console.WriteLine("--------------------------------------------");
+            }
+            catch(Exception)
+            { }
         }
     }
 }

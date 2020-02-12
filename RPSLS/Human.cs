@@ -33,6 +33,10 @@ namespace RPSLS
                 userChoiceIsInteger = int.TryParse(stringUserChoice, out intUserChoice);
                 //If user input cannot be parsed to an int, or parses to an int which is not a valid index of this list, go back and repeat until valid input is given.
                 validSelection = userChoiceIsInteger && intUserChoice >= 0 && intUserChoice < gestures.Count;
+                if (!validSelection)
+                {
+                    Console.WriteLine("Not a valid choice. Please try again.");
+                }
             } while (!validSelection);
             //Use that index value to pull gesture object from list
 
