@@ -23,7 +23,10 @@ namespace RPSLS
 
         public void PlayGame()
         {
+            //Print game instructions
+            PrintInstructions();
             //Let user choose if they want to play against another human, or against the computer.
+            //Begin first round of play.
             while (playerOne.score < winningScore && playerTwo.score < winningScore)
             {
                 //Let user(s) choose which gesture they want to use.
@@ -47,7 +50,14 @@ namespace RPSLS
                 Console.WriteLine("error");
             }
         }
-        public void Battle(Gesture playerOneGesture, Gesture playerTwoGesture)
+        private void PrintInstructions()
+        {
+            Console.WriteLine("Welcome to Rock-Paper-Scissors-Lizard-Spock! \n");
+            Console.WriteLine("The rules are simple. You and your opponent will each choose a play (Rock, Paper, Scissors, Lizard, or Spock), and the player with the winning play gains a point. \n");
+            Console.WriteLine("The hierarchy of plays is as follows: \n Rock crushes Scissors \n Scissors cuts Paper \n Paper covers Rock \n Rock crushes Lizard \n Lizard poisons Spock \n Spock smashes Scissors \n Scissors decapitates Lizard \n Lizard eats Paper \n Paper disproves Spock \n Spock vaporizes Rock \n");
+            Console.WriteLine("The first player to " + winningScore + " points wins the game. Good luck! \n");
+        }
+        private void Battle(Gesture playerOneGesture, Gesture playerTwoGesture)
         {
             //Get gestures from both players.
             //Look at gestures to see if either contains the other as one of its loser string variables.
