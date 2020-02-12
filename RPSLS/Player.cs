@@ -26,6 +26,6 @@ namespace RPSLS
 
         //Create universal portion of picking a gesture.
         public abstract void PickGesture();
-        
+        public abstract void PickName();
     }
 }

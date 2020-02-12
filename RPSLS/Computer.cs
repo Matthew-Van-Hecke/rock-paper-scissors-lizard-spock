@@ -23,5 +23,11 @@ namespace RPSLS
             gesture = gestures[intGesturePick];
             Console.WriteLine("\n" + name + " picked " + gesture.name);
         }
+        public override void PickName()
+        {
+            List<string> names = new List<string>() { "R2D2", "C3PO", "BB8" };
+            int randomNumber = new Random().Next(names.Count);
+            name = names[randomNumber];
+        }
     }
 }

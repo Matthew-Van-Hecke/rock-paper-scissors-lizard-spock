@@ -52,5 +52,11 @@ namespace RPSLS
                 Console.WriteLine("Not a valid choice. Please try again.");
             }
         }
+        public override void PickName()
+        {
+            Console.WriteLine("Please type your name");
+            name = Console.ReadLine();
+            Console.WriteLine("Welcome, " + name);
+        }
     }
 }

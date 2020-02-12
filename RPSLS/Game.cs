@@ -30,6 +30,9 @@ namespace RPSLS
             PressKeyToContinue();
             //Let user choose if they want to play against another human, or against the computer.
             ChoosePlayMode();
+            //Pick names for players
+            playerOne.PickName();
+            playerTwo.PickName();
             //Begin first round of play.
             PlayRound();
             //Display victory message.
