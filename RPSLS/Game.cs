@@ -23,51 +23,38 @@ namespace RPSLS
         public void PlayGame()
         {
             gameLog = new List<string>();
-            string resultOfBattle;
-            int roundCounter = 1;
-            string roundResult;
+
             gameLog.Clear();
             //Print game instructions
-            PrintScreen();
+            PrintScreen(0);
             PressKeyToContinue();
             //Let user choose if they want to play against another human, or against the computer.
             ChoosePlayMode();
             //Begin first round of play.
+            PlayRound();
+            //Display victory message.
+            PrintVictoryMessage();
+        }
+        private void PlayRound()
+        {
+            int roundCounter = 1;
+            string resultOfBattle;
             while (playerOne.score < winningScore && playerTwo.score < winningScore)
             {
-                //Let user(s) choose which gesture they want to use.
+                //Let user(s) choose which gesture they want to use, clearing console after player one has made choice.
                 playerOne.PickGesture();
                 Console.Clear();
-                PrintScreen();
+                PrintScreen(roundCounter);
                 Console.WriteLine("\nThank you for making your choice, " + playerOne.name + ".");
                 playerTwo.PickGesture();
-                //Create method to compare gestures and determine which one wins.
+                //Run method which compares gestures to determine winner and returns result as a string. Save result string to a variable.
                 resultOfBattle = Battle(playerOne.gesture, playerTwo.gesture);
                 //Print who just one the round.
-                if (resultOfBattle == "tie")
-                {
-                    roundResult = "\nRound was a tie!";
-                }
-                else
-                {
-                    roundResult = "\n" + resultOfBattle + " wins the round";
-                }
-                roundResult = "\nRound " + roundCounter + ":\n" + playerOne.name + " picked " + playerOne.gesture.name + ".\n" + playerTwo.name + " picked " + playerTwo.gesture.name + "." + roundResult;
-                gameLog.Add(roundResult);
+                LogRoundResult(resultOfBattle, roundCounter);
                 roundCounter++;
-                //Repeat these steps until one player reaches three points.
                 //Clear console, and reprint.
                 Console.Clear();
-                PrintScreen();
-            }
-            //Display victory message.
-            if (playerOne.score >= winningScore)
-            {
-                Console.WriteLine("\n" + playerOne.name + " wins the game with a score of: " + playerOne.score + "!");
-            }
-            else
-            {
-                Console.WriteLine("\n" + playerTwo.name + " wins the game with a score of: " + playerTwo.score + "!");
+                PrintScreen(roundCounter);
             }
         }
         private void PrintInstructions()
@@ -79,7 +66,6 @@ namespace RPSLS
         }
         private string Battle(Gesture playerOneGesture, Gesture playerTwoGesture)
         {
-            //Get gestures from both players.
             //Look at gestures to see if either contains the other as one of its loser string variables.
             //If one contains the name of the other, it wins. Increment that players score.
             if (playerOneGesture.name == playerTwoGesture.beats1 || playerOneGesture.name == playerTwoGesture.beats2)
@@ -108,24 +94,7 @@ namespace RPSLS
                 Console.WriteLine("Human vs. Human (h) \nor Human vs. Computer (c)");
                 ConsoleKeyInfo keyUserInput = Console.ReadKey();
                 Console.WriteLine();
-                switch (keyUserInput.Key)
-                {
-                    case (ConsoleKey.H):
-                        Console.WriteLine("Human v Human");
-                        playerOne = new Human("Bob");
-                        playerTwo = new Human("Larry");
-                        validSelection = true;
-                        break;
-                    case (ConsoleKey.C):
-                        Console.WriteLine("Human v Computer");
-                        validSelection = true;
-                        playerOne = new Human("Bob");
-                        playerTwo = new Computer();
-                        break;
-                    default:
-                        validSelection = false;
-                        break;
-                }
+                validSelection = ProcessKeyInputFromChoosePlayMode(keyUserInput);
             } while (!validSelection);
         }
         private void PressKeyToContinue()
@@ -135,20 +104,61 @@ namespace RPSLS
             Console.ReadKey();
             Console.WriteLine("\n------------------------------------------");
         }
-        private void PrintScreen()
+        private void PrintScreen(int counter)
         {
             PrintInstructions();
             foreach (string logItem in gameLog)
             {
                 Console.WriteLine(logItem);
             }
-            try
+            if (counter>1)
             {
                 Console.WriteLine($"\nCurrent scores - {playerOne.name}: {playerOne.score} ---- {playerTwo.name}: {playerTwo.score}");
                 Console.WriteLine("--------------------------------------------");
             }
-            catch(Exception)
-            { }
+        }
+        private void PrintVictoryMessage()
+        {
+            if (playerOne.score >= winningScore)
+            {
+                Console.WriteLine("\n" + playerOne.name + " wins the game with a score of: " + playerOne.score);
+            }
+            else
+            {
+                Console.WriteLine("\n" + playerTwo.name + " wins the game with a score of: " + playerTwo.score);
+            }
+        }
+        private void LogRoundResult(string resultOfBattle, int counter)
+        {
+            string roundResult;
+            if (resultOfBattle == "tie")
+            {
+                roundResult = "\nRound was a tie";
+            }
+            else
+            {
+                roundResult = "\n" + resultOfBattle + " wins the round";
+            }
+            roundResult = "\nRound " + counter + ":\n" + playerOne.name + " picked " + playerOne.gesture.name + ".\n" + playerTwo.name + " picked " + playerTwo.gesture.name + "." + roundResult;
+            gameLog.Add(roundResult);
+        }
+        private bool ProcessKeyInputFromChoosePlayMode(ConsoleKeyInfo userInput)
+        {
+            switch (userInput.Key)
+            {
+                case (ConsoleKey.H):
+                    Console.WriteLine("Human v Human");
+                    playerOne = new Human("Bob");
+                    playerTwo = new Human("Larry");
+                    return true;
+                case (ConsoleKey.C):
+                    Console.WriteLine("Human v Computer");
+                    playerOne = new Human("Bob");
+                    playerTwo = new Computer();
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 }
