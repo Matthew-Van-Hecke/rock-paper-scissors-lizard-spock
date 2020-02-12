@@ -9,6 +9,7 @@ namespace RPSLS
     class Human : Player
     {
         bool userChoiceIsInteger;
+        bool validSelection;
         public int intUserChoice;
         public Human(string name)
             :base (name)
@@ -16,7 +17,7 @@ namespace RPSLS
             userChoiceIsInteger = false;
         }
         //Assign logic to PickGesture method from player class
-        public override Gesture PickGesture()
+        public override void PickGesture()
         {
             //Prompt user to pick a gesture from list based on index value
             Console.WriteLine("Please choose your move by typing the number next to it and hitting enter");
@@ -31,10 +32,11 @@ namespace RPSLS
                 string stringUserChoice = Console.ReadLine();
                 userChoiceIsInteger = int.TryParse(stringUserChoice, out intUserChoice);
                 //If user input cannot be parsed to an int, or parses to an int which is not a valid index of this list, go back and repeat until valid input is given.
-            } while (!userChoiceIsInteger && intUserChoice >= 0 && intUserChoice < gestures.Count);
+                validSelection = userChoiceIsInteger && intUserChoice >= 0 && intUserChoice < gestures.Count;
+            } while (!validSelection);
             //Use that index value to pull gesture object from list
 
-            return gestures[intUserChoice];
+            gesture = gestures[intUserChoice];
         }
 
     }
