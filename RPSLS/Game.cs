@@ -15,8 +15,6 @@ namespace RPSLS
         //Contructor
         public Game()
         {
-            playerOne = new Human("Bob");
-            playerTwo = new Computer();
             winningScore = 2;
         }
         //Member Methods
@@ -25,7 +23,9 @@ namespace RPSLS
         {
             //Print game instructions
             PrintInstructions();
+            PressKeyToContinue();
             //Let user choose if they want to play against another human, or against the computer.
+            ChoosePlayMode();
             //Begin first round of play.
             while (playerOne.score < winningScore && playerTwo.score < winningScore)
             {
@@ -46,7 +46,7 @@ namespace RPSLS
                 Console.WriteLine("Player two wins with a score of: " + playerTwo.score);
             }
             else
-            { 
+            {
                 Console.WriteLine("error");
             }
         }
@@ -71,6 +71,46 @@ namespace RPSLS
                 playerOne.score += 1;
             }
             //If both players picked the same object, they tie and nothing happens.
+        }
+        private void ChoosePlayMode()
+        {
+            bool validSelection = true;
+            do
+            {
+                if (!validSelection)
+                {
+                    Console.WriteLine("Not a valid selection. Please try again.");
+                }
+                Console.WriteLine("Which mode would you like to play?");
+                Console.WriteLine("Human vs. Human (h) \nor Human vs. Computer (c)\n");
+                ConsoleKeyInfo keyUserInput = Console.ReadKey();
+                Console.WriteLine();
+                switch (keyUserInput.Key)
+                {
+                    case (ConsoleKey.H):
+                        Console.WriteLine("Human v Human");
+                        playerOne = new Human("Bob");
+                        playerTwo = new Human("Larry");
+                        validSelection = true;
+                        break;
+                    case (ConsoleKey.C):
+                        Console.WriteLine("Human v Computer");
+                        validSelection = true;
+                        playerOne = new Human("Bob");
+                        playerTwo = new Computer();
+                        break;
+                    default:
+                        validSelection = false;
+                        break;
+                }
+            } while (!validSelection);
+        }
+        private void PressKeyToContinue()
+        {
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine("Press any key to continue");
+            Console.ReadKey();
+            Console.WriteLine("\n------------------------------------------");
         }
     }
 }
