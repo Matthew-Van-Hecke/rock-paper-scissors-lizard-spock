@@ -21,6 +21,7 @@ namespace RPSLS
             //Pick a random number from among the valid indices for the list of gestures.
             intGesturePick = new Random().Next(gestures.Count);
             gesture = gestures[intGesturePick];
+            Console.WriteLine("\n" + name + " picked " + gesture.name);
         }
     }
 }

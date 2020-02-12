@@ -21,6 +21,7 @@ namespace RPSLS
 
         public void PlayGame()
         {
+            string resultOfBattle;
             //Print game instructions
             PrintInstructions();
             PressKeyToContinue();
@@ -33,21 +34,26 @@ namespace RPSLS
                 playerOne.PickGesture();
                 playerTwo.PickGesture();
                 //Create method to compare gestures and determine which one wins.
-                Battle(playerOne.gesture, playerTwo.gesture);
+                resultOfBattle = Battle(playerOne.gesture, playerTwo.gesture);
+                //Print who just one the round.
+                if (resultOfBattle == "tie")
+                {
+                    Console.WriteLine("Round was a tie!");
+                }
+                else
+                {
+                    Console.WriteLine("\n" + resultOfBattle + " wins the round");
+                }
                 //Repeat these steps until one player reaches three points.
             }
             //Display victory message.
             if (playerOne.score >= winningScore)
             {
-                Console.WriteLine("Player one wins with a score of: " + playerOne.score);
-            }
-            else if (playerTwo.score >= winningScore)
-            {
-                Console.WriteLine("Player two wins with a score of: " + playerTwo.score);
+                Console.WriteLine("\n" + playerOne.name + " wins the game with a score of: " + playerOne.score + "!");
             }
             else
             {
-                Console.WriteLine("error");
+                Console.WriteLine("\n" + playerTwo.name + " wins the game with a score of: " + playerTwo.score + "!");
             }
         }
         private void PrintInstructions()
@@ -57,7 +63,7 @@ namespace RPSLS
             Console.WriteLine("The hierarchy of plays is as follows: \n Rock crushes Scissors \n Scissors cuts Paper \n Paper covers Rock \n Rock crushes Lizard \n Lizard poisons Spock \n Spock smashes Scissors \n Scissors decapitates Lizard \n Lizard eats Paper \n Paper disproves Spock \n Spock vaporizes Rock \n");
             Console.WriteLine("The first player to " + winningScore + " points wins the game. Good luck! \n");
         }
-        private void Battle(Gesture playerOneGesture, Gesture playerTwoGesture)
+        private string Battle(Gesture playerOneGesture, Gesture playerTwoGesture)
         {
             //Get gestures from both players.
             //Look at gestures to see if either contains the other as one of its loser string variables.
@@ -65,12 +71,15 @@ namespace RPSLS
             if (playerOneGesture.name == playerTwoGesture.beats1 || playerOneGesture.name == playerTwoGesture.beats2)
             {
                 playerTwo.score += 1;
+                return playerTwo.name;
             }
             else if (playerTwoGesture.name == playerOneGesture.beats1 || playerTwoGesture.name == playerOneGesture.beats2)
             {
                 playerOne.score += 1;
+                return playerOne.name;
             }
             //If both players picked the same object, they tie and nothing happens.
+            return "tie";
         }
         private void ChoosePlayMode()
         {
@@ -82,7 +91,7 @@ namespace RPSLS
                     Console.WriteLine("Not a valid selection. Please try again.");
                 }
                 Console.WriteLine("Which mode would you like to play?");
-                Console.WriteLine("Human vs. Human (h) \nor Human vs. Computer (c)\n");
+                Console.WriteLine("Human vs. Human (h) \nor Human vs. Computer (c)");
                 ConsoleKeyInfo keyUserInput = Console.ReadKey();
                 Console.WriteLine();
                 switch (keyUserInput.Key)
@@ -108,7 +117,7 @@ namespace RPSLS
         private void PressKeyToContinue()
         {
             Console.WriteLine("------------------------------------------");
-            Console.WriteLine("Press any key to continue");
+            Console.Write("Press any key to continue: ");
             Console.ReadKey();
             Console.WriteLine("\n------------------------------------------");
         }

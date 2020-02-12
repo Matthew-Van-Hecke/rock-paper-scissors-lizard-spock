@@ -20,7 +20,7 @@ namespace RPSLS
         public override void PickGesture()
         {
             //Prompt user to pick a gesture from list based on index value
-            Console.WriteLine("Please choose your move by typing the number next to it and hitting enter");
+            Console.WriteLine("\n" + name + ", please choose your move by typing the number next to it and hitting enter");
             //Display list of gestures with index values.
             do
             {
@@ -37,6 +37,7 @@ namespace RPSLS
             //Use that index value to pull gesture object from list
 
             gesture = gestures[intUserChoice];
+            Console.WriteLine("\n" + name + " picked " + gesture.name);
         }
 
     }
