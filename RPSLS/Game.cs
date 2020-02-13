@@ -30,6 +30,7 @@ namespace RPSLS
             PressKeyToContinue();
             //Let user choose if they want to play against another human, or against the computer.
             ChoosePlayMode();
+            PressKeyToContinue();
             //Pick names for players
             playerOne.PickName();
             playerTwo.PickName();
@@ -151,12 +152,12 @@ namespace RPSLS
             {
                 case (ConsoleKey.H):
                     Console.WriteLine("Human v Human");
-                    playerOne = new Human("Bob");
-                    playerTwo = new Human("Larry");
+                    playerOne = new Human("Player 1");
+                    playerTwo = new Human("Player 2");
                     return true;
                 case (ConsoleKey.C):
                     Console.WriteLine("Human v Computer");
-                    playerOne = new Human("Bob");
+                    playerOne = new Human("Player 2");
                     playerTwo = new Computer();
                     return true;
                 default:

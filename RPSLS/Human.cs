@@ -54,9 +54,19 @@ namespace RPSLS
         }
         public override void PickName()
         {
-            Console.WriteLine("Please type your name");
-            name = Console.ReadLine();
-            Console.WriteLine("Welcome, " + name);
+            do
+            {
+                if (name == "")
+                {
+                    Console.WriteLine("Name field cannot be left blank. Please type something.");
+                }
+                else
+                {
+                    Console.WriteLine("\n" + name + ", please type your name");
+                }
+                name = Console.ReadLine();
+            } while (name == "");
+            Console.WriteLine("Welcome, " + name + "!");
         }
     }
 }
