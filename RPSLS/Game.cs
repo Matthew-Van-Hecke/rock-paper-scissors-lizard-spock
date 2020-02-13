@@ -71,12 +71,12 @@ namespace RPSLS
         {
             //Look at gestures to see if either contains the other as one of its loser string variables.
             //If one contains the name of the other, it wins. Increment that players score.
-            if (playerOneGesture.name == playerTwoGesture.beats1 || playerOneGesture.name == playerTwoGesture.beats2)
+            if (playerTwoGesture.beats.Contains(playerOneGesture.name))
             {
                 playerTwo.score += 1;
                 return playerTwo.name;
             }
-            else if (playerTwoGesture.name == playerOneGesture.beats1 || playerTwoGesture.name == playerOneGesture.beats2)
+            else if (playerOneGesture.beats.Contains(playerTwoGesture.name))
             {
                 playerOne.score += 1;
                 return playerOne.name;
