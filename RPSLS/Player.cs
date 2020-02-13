@@ -13,10 +13,12 @@ namespace RPSLS
         public int score;
         public List<Gesture> gestures;
         public Gesture gesture;
+        public Random Rng;
 
         //Constructor
-        public Player(string name)
+        public Player(string name, Random rng)
         {
+            Rng = rng;
             this.name = name;
             score = 0;
             gestures = new List<Gesture>() { new Gesture("Rock", "Scissors", "Lizard"), new Gesture("Paper", "Spock", "Rock"), new Gesture("Scissors", "Paper", "Lizard"), new Gesture("Lizard", "Spock", "Paper"), new Gesture("Spock", "Scissors", "Rock") };

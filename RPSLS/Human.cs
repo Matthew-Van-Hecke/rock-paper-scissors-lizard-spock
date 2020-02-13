@@ -11,8 +11,8 @@ namespace RPSLS
         bool userChoiceIsInteger;
         bool validSelection;
         public int intUserChoice;
-        public Human(string name)
-            :base (name)
+        public Human(string name, Random Rng)
+            :base (name, Rng)
         {
             userChoiceIsInteger = false;
         }

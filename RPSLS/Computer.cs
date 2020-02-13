@@ -9,8 +9,8 @@ namespace RPSLS
     class Computer : Player
     {
         int intGesturePick;
-        public Computer()
-            :base("ROBOPLAYER")
+        public Computer(Random Rng)
+            :base("ROBOPLAYER", Rng)
         {
             intGesturePick = 0;
         }
@@ -19,14 +19,14 @@ namespace RPSLS
         public override void PickGesture()
         {
             //Pick a random number from among the valid indices for the list of gestures.
-            intGesturePick = new Random().Next(gestures.Count);
+            intGesturePick = Rng.Next(gestures.Count);
             gesture = gestures[intGesturePick];
             Console.WriteLine("\n" + name + " picked " + gesture.name);
         }
         public override void PickName()
         {
-            List<string> names = new List<string>() { "R2D2", "C3PO", "BB8" };
-            int randomNumber = new Random().Next(names.Count);
+            List<string> names = new List<string>() { "R2D2", "C3PO", "BB8", "D-0", "Omnidroid Nine Thousand", "Marvin", "Jarvis" };
+            int randomNumber = Rng.Next(names.Count);
             name = names[randomNumber];
         }
     }

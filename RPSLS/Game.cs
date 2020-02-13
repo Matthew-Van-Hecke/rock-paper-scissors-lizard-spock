@@ -11,11 +11,13 @@ namespace RPSLS
         //Member Variables
         Player playerOne;
         Player playerTwo;
+        Random MasterRandom;
         int winningScore;
         List<string> gameLog;
         //Contructor
         public Game()
         {
+            MasterRandom = new Random();
             winningScore = 2;
         }
         //Member Methods
@@ -37,7 +39,10 @@ namespace RPSLS
                 PressKeyToContinue();
                 //Pick names for players
                 playerOne.PickName();
-                playerTwo.PickName();
+                do
+                {
+                    playerTwo.PickName();
+                } while (playerTwo.name == playerOne.name);
                 //Begin first round of play.
                 while (playerOne.score < winningScore && playerTwo.score < winningScore)
                 {
@@ -85,7 +90,7 @@ namespace RPSLS
                     Console.WriteLine("Not a valid selection. Please try again.");
                 }
                 Console.WriteLine("Which mode would you like to play?");
-                Console.WriteLine("Human vs. Human (h) \nor Human vs. Computer (c)");
+                Console.WriteLine("Human vs. Human (h) \nor Human vs. Computer (c) \nor Computer vs Computer (x)");
                 ConsoleKeyInfo keyUserInput = Console.ReadKey();
                 Console.WriteLine();
                 validSelection = ProcessKeyInputFromChoosePlayMode(keyUserInput);
@@ -96,14 +101,19 @@ namespace RPSLS
             switch (userInput.Key)
             {
                 case (ConsoleKey.H):
-                    Console.WriteLine("Human v Human");
-                    playerOne = new Human("Player 1");
-                    playerTwo = new Human("Player 2");
+                    Console.WriteLine("Human vs. Human");
+                    playerOne = new Human("Player 1",MasterRandom);
+                    playerTwo = new Human("Player 2", MasterRandom);
                     return true;
                 case (ConsoleKey.C):
-                    Console.WriteLine("Human v Computer");
-                    playerOne = new Human("Player 1");
-                    playerTwo = new Computer();
+                    Console.WriteLine("Human vs. Computer");
+                    playerOne = new Human("Player 1", MasterRandom);
+                    playerTwo = new Computer(MasterRandom);
+                    return true;
+                case (ConsoleKey.X):
+                    Console.WriteLine("Computer vs. Computer");
+                    playerOne = new Computer(MasterRandom);
+                    playerTwo = new Computer(MasterRandom);
                     return true;
                 default:
                     return false;
