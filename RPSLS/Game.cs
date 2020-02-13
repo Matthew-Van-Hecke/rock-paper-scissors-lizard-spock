@@ -23,43 +23,48 @@ namespace RPSLS
         public void PlayGame()
         {
             gameLog = new List<string>();
-
-            gameLog.Clear();
-            //Print game instructions
-            PrintScreen(0);
-            PressKeyToContinue();
-            //Let user choose if they want to play against another human, or against the computer.
-            ChoosePlayMode();
-            PressKeyToContinue();
-            //Pick names for players
-            playerOne.PickName();
-            playerTwo.PickName();
-            //Begin first round of play.
-            PlayRound();
-            //Display victory message.
-            PrintVictoryMessage();
-        }
-        private void PlayRound()
-        {
             int roundCounter = 1;
-            string resultOfBattle;
-            while (playerOne.score < winningScore && playerTwo.score < winningScore)
+            do
             {
-                //Let user(s) choose which gesture they want to use, clearing console after player one has made choice.
-                playerOne.PickGesture();
                 Console.Clear();
-                PrintScreen(roundCounter);
-                Console.WriteLine("\nThank you for making your choice, " + playerOne.name + ".");
-                playerTwo.PickGesture();
-                //Run method which compares gestures to determine winner and returns result as a string. Save result string to a variable.
-                resultOfBattle = Battle(playerOne.gesture, playerTwo.gesture);
-                //Print who just one the round.
-                LogRoundResult(resultOfBattle, roundCounter);
-                roundCounter++;
-                //Clear console, and reprint.
-                Console.Clear();
-                PrintScreen(roundCounter);
-            }
+                gameLog.Clear();
+                //Print game instructions
+                PrintScreen(0);
+                PressKeyToContinue();
+                //Let user choose if they want to play against another human, or against the computer.
+                ChoosePlayMode();
+                PressKeyToContinue();
+                //Pick names for players
+                playerOne.PickName();
+                playerTwo.PickName();
+                //Begin first round of play.
+                while (playerOne.score < winningScore && playerTwo.score < winningScore)
+                {
+                    roundCounter = PlayRound(roundCounter);
+                }
+                //Display victory message.
+                PrintVictoryMessage();
+            } while (PlayAgain());
+            Console.WriteLine("Goodbye, and thanks for playing!");
+        }
+        private int PlayRound(int counter)
+        {
+            string resultOfBattle;
+            //Let user(s) choose which gesture they want to use, clearing console after player one has made choice.
+            playerOne.PickGesture();
+            Console.Clear();
+            PrintScreen(counter);
+            Console.WriteLine("\nThank you for making your choice, " + playerOne.name + ".");
+            playerTwo.PickGesture();
+            //Run method which compares gestures to determine winner and returns result as a string. Save result string to a variable.
+            resultOfBattle = Battle(playerOne.gesture, playerTwo.gesture);
+            //Print who just one the round.
+            LogRoundResult(resultOfBattle, counter);
+            counter++;
+            //Clear console, and reprint.
+            Console.Clear();
+            PrintScreen(counter);
+            return counter;
         }
         private void PrintInstructions()
         {
@@ -157,12 +162,34 @@ namespace RPSLS
                     return true;
                 case (ConsoleKey.C):
                     Console.WriteLine("Human v Computer");
-                    playerOne = new Human("Player 2");
+                    playerOne = new Human("Player 1");
                     playerTwo = new Computer();
                     return true;
                 default:
                     return false;
             }
+        }
+        public bool PlayAgain()
+        {
+            do
+            {
+                Console.WriteLine("Would you like to play again?");
+                switch (Console.ReadLine().ToLower())
+                {
+                    case ("y"):
+                    case ("yes"):
+                    case ("yep"):
+                    case ("sure"):
+                    case ("ya"):
+                    case ("yeah"):
+                        return true;
+                    case (""):
+                        Console.WriteLine("Field cannot be left blank. Please type some response (\"y\", \"yes\", \"yep\", \"sure\", \"ya\", and \"yeah\" will all start a new game. Any other response will close the program.");
+                        break;
+                    default:
+                        return false;
+                }
+            } while (true);
         }
     }
 }
